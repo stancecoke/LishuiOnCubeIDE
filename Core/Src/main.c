@@ -312,7 +312,7 @@ int main(void) {
       static uint8_t debug_cnt = 0;
       if (++debug_cnt > 13) { // every 13 * 20 ms = 260ms
         debug_cnt = 0;
-        printf_("%d, %d\n", MSPublic.debug[0], MSPublic.debug[1] * CAL_I);
+        //printf_("%d, %d\n", MSPublic.debug[0], MSPublic.debug[1] * CAL_I);
       }
     }
   }

@@ -44,7 +44,7 @@ int sprintf_(char *buffer, const char *format, ...);
  +=============================================================================+
  */
 
-void putc_UART3(char);         // blocking put char; used by printf_()
+void putc_UART1(char);         // blocking put char; used by printf_()
 void putc_strg(char);          // the put() function for sprintf()
 char *SPRINTF_buffer;          //
 
@@ -63,15 +63,15 @@ void long_itoa(long, int, int, void (*)(char)); //heavily used by printf_()
  +=============================================================================+
  */
 
-void putc_UART3(char c) {
+void putc_UART1(char c) {
   if (c == '\n') {
-    while ((USART3->SR & USART_SR_TXE) == 0)
+    while ((USART1->SR & USART_SR_TXE) == 0)
       ;  //blocks until previous byte was sent
-    USART3->DR = '\r';
+    USART1->DR = '\r';
   }
-  while ((USART3->SR & USART_SR_TXE) == 0)
+  while ((USART1->SR & USART_SR_TXE) == 0)
     ;  //blocks until previous byte was sent
-  USART3->DR = c;
+  USART1->DR = c;
 }
 
 /*
@@ -89,7 +89,7 @@ int printf_(const char *format, ...) {
   va_list arg;
 
   va_start(arg, format);
-  vfprintf_((&putc_UART3), format, arg);
+  vfprintf_((&putc_UART1), format, arg);
   va_end(arg);
 
   return 0;
