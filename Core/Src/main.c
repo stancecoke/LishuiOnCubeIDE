@@ -330,11 +330,11 @@ int main(void) {
       if (++debug_cnt > 13) { // every 13 * 20 ms = 260ms
         debug_cnt = 0;
 
-       	  sprintf_(buffer, " %d, %d, %d,\r\n",MSPublic.i_q_setpoint_target,ui16_throttle,MSPublic.battery_voltage) ;
+       	  sprintf_(buffer, " %d, %d, %d,\r\n",MSPublic.i_q_setpoint_target,ui16_throttle) ;
 		  i=0;
 		  while (buffer[i] != '\0')
 		  {i++;}
-		 HAL_UART_Transmit_DMA(&huart1, (uint8_t *)&buffer, i);
+		   HAL_UART_Transmit_DMA(&huart1, (uint8_t *)&buffer, i);
       }
     }
   }
