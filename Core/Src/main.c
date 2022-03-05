@@ -329,9 +329,8 @@ int main(void) {
       static uint8_t debug_cnt = 0;
       if (++debug_cnt > 13) { // every 13 * 20 ms = 260ms
         debug_cnt = 0;
-        printf_("%d, %d\n", MSPublic.debug[0], MSPublic.debug[1] * CAL_I);
 
-		  sprintf_(buffer, "Hallo Welt") ;
+       	  sprintf_(buffer, " %d, %d, %d,\r\n",MSPublic.i_q_setpoint_target,ui16_throttle,MSPublic.battery_voltage) ;
 		  i=0;
 		  while (buffer[i] != '\0')
 		  {i++;}
