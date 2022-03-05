@@ -19,7 +19,8 @@
 // not need to optimize the motor_slow_loop
 #pragma GCC push_options
 #pragma GCC optimize ("O0")
-
+char buffer[100];
+uint32_t i;
 UART_HandleTypeDef huart1;
 
 DMA_HandleTypeDef hdma_usart1_tx;
@@ -125,13 +126,8 @@ static void MX_USART1_UART_Init(void)
 
   huart1.Instance = USART1;
 
-#if ((DISPLAY_TYPE & DISPLAY_TYPE_KINGMETER) ||DISPLAY_TYPE==DISPLAY_TYPE_KUNTENG||DISPLAY_TYPE==DISPLAY_TYPE_EBiCS)
-  huart1.Init.BaudRate = 9600;
-#elif (DISPLAY_TYPE == DISPLAY_TYPE_BAFANG)
-  huart1.Init.BaudRate = 1200;
-#else
-  huart1.Init.BaudRate = 56000;
-#endif
+  huart1.Init.BaudRate = 115200;
+
 
 
   huart1.Init.WordLength = UART_WORDLENGTH_8B;
@@ -153,7 +149,13 @@ static void MX_USART1_UART_Init(void)
  * @retval None
  */
 static void GPIO_Init(void) {
-  // init here any needed pins
+
+
+	  /* GPIO Ports Clock Enable */
+	  __HAL_RCC_GPIOA_CLK_ENABLE();
+	  __HAL_RCC_GPIOB_CLK_ENABLE();
+
+
 }
 
 void HAL_UART_ErrorCallback(UART_HandleTypeDef *UartHandle) {
@@ -327,7 +329,13 @@ int main(void) {
       static uint8_t debug_cnt = 0;
       if (++debug_cnt > 13) { // every 13 * 20 ms = 260ms
         debug_cnt = 0;
-        //printf_("%d, %d\n", MSPublic.debug[0], MSPublic.debug[1] * CAL_I);
+        printf_("%d, %d\n", MSPublic.debug[0], MSPublic.debug[1] * CAL_I);
+
+		  sprintf_(buffer, "Hallo Welt") ;
+		  i=0;
+		  while (buffer[i] != '\0')
+		  {i++;}
+		 HAL_UART_Transmit_DMA(&huart1, (uint8_t *)&buffer, i);
       }
     }
   }
